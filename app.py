@@ -1,5 +1,8 @@
 from flask import Flask, render_template, Response
 from rpi_camera import RPiCamera
+import face_recognition
+import cv2
+import numpy as np
 
 app = Flask(__name__)
 
@@ -23,9 +26,15 @@ def gen(camera):
 def stream():
 
     feed = Response(gen(RPiCamera()), mimetype='multipart/x-mixed-replace; boundary=frame')
-
+    face_recognition()
     print(type(feed))
     return feed
+
+
+
+video_capture = cv2.VideoCapture(0)
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', debug=True, threaded=True )
